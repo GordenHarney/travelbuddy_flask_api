@@ -1,0 +1,6 @@
+flask
+openai
+Flask-Cors
+bcrypt
+google-cloud-firestore
+smtplib
