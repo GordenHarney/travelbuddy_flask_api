@@ -44,6 +44,26 @@ def ask_gpt():
     message_content = response.choices[0].message.content
     return jsonify({"response": message_content})
 
+@app.route('/add_chat_history', methods=['POST'])
+def add_chat_history():
+    user_id = request.json.get("userId")
+    answers = request.json.get("answers")
+    
+    if not user_id or not answers:
+        return jsonify({"error": "User ID or answers missing!"}), 400
+
+    # Reference to your Firestore chat history collection
+    chat_history_ref = db.collection('chat_history')
+    
+    # Add a new document with the provided data
+    chat_history_ref.add({
+        "userId": user_id,
+        "answers": answers,
+        "timestamp": firestore.SERVER_TIMESTAMP  # This will add a server-side timestamp
+    })
+
+    return jsonify({"message": "Chat history added successfully!"}), 200
+
 def send_email(recipient, subject, body):
     msg = EmailMessage()
     msg.set_content(body)
