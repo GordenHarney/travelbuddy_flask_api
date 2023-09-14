@@ -4,3 +4,4 @@ Flask-Cors
 bcrypt
 google-cloud-firestore
 smtplib
+python-dotenv
